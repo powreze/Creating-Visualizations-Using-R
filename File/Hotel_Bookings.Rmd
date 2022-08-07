@@ -1,0 +1,67 @@
+---
+title: "Hotel_Bookings"
+author: "Aulia"
+date: '2022-07-25'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+In this project I will create visualizations that highlight different aspects of the data using 'ggplot2'.
+
+
+#### STEP 1: Load the Data
+
+```{r load data}
+hotel_bookings <- read.csv("hotel_bookings.csv")
+```
+
+```{r date, echo=FALSE}
+mindate <- min(hotel_bookings$arrival_date_year)
+maxdate <- max(hotel_bookings$arrival_date_year)
+```
+
+#### STEP 2: Load the 'ggplot2'
+
+```{r load ggplot2}
+library(ggplot2)
+```
+
+#### STEP 3: Making a Bar Chart (Part 1)
+
+The stakeholder is interested in developing promotions based on different transactions are occurring for each different distribution type.
+
+```{r example chart, echo=FALSE}
+ggplot(data = hotel_bookings) +
+  geom_bar(mapping = aes(x = distribution_channel))
+```
+
+### STEP 4: Making a Bar Chart (Part 2)
+
+they also want to know if the number of bookings for each distribution type is different depending on whether or not there was a deposit or what market segment they represent.
+
+```{r creating chart based on deposit type, echo=FALSE}
+ggplot(hotel_bookings, aes(x = distribution_channel, fill = deposit_type)) +
+  geom_bar(position = "dodge2") +
+  labs(title="Chart of Distribution Type Based on Deposit",
+       caption=paste0("Data from: ", mindate, " to ", maxdate))
+```
+
+```{r creating chart based on market segment, echo=FALSE}
+ggplot(hotel_bookings, aes(x = distribution_channel, fill = market_segment)) +
+  geom_bar(position = "dodge2")  +
+  labs(title="Chart of Distribution Type Based on Market Segment",
+       caption=paste0("Data from: ", mindate, " to ", maxdate))
+```
+
+#### Conclusion
+
+From the chart I made the conclusion that TA/TO is more gaining transaction than others distribution type.
+Based on the second chart it looks like guests is more common with no deposit in the hotel. And based on the last chart, there is a multiple option in every distribution type.
+
+So, I want to give a some kind like solution.
+If company want to make the decision based on the number, so they better focus on TA/TO. They also have to give more attention on online TA since that market segment is the most popular than others.
+Company also can give a little gift or discount for groups cause i guess it will give more benefit for company.
